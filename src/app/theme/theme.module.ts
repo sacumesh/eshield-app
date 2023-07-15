@@ -5,7 +5,17 @@ import { FooterComponent } from './components/footer/footer.component';
 import { OneColumnComponent } from './layouts/one-column/one-column.component';
 import { TwoColumnsComponent } from './layouts/two-columns/two-columns.component';
 import { ThreeColumnsComponent } from './layouts/three-columns/three-columns.component';
-import { NbLayoutModule, NbSidebarModule, NbThemeModule } from '@nebular/theme';
+import {
+  NbActionsModule,
+  NbContextMenuModule,
+  NbIconModule,
+  NbLayoutModule,
+  NbMenuModule,
+  NbSearchModule,
+  NbSidebarModule,
+  NbThemeModule,
+  NbUserModule,
+} from '@nebular/theme';
 
 @NgModule({
   declarations: [
@@ -20,6 +30,12 @@ import { NbLayoutModule, NbSidebarModule, NbThemeModule } from '@nebular/theme';
     NbThemeModule.forRoot({ name: 'cooperate' }),
     NbLayoutModule,
     NbSidebarModule,
+    NbIconModule,
+    NbActionsModule,
+    NbSearchModule,
+    NbUserModule,
+    NbContextMenuModule,
+    NbMenuModule.forRoot(),
   ],
   exports: [
     HeaderComponent,

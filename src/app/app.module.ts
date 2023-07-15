@@ -15,6 +15,13 @@ import {
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PagesModule } from './pages/pages.module';
 import { ThemeModule } from './theme/theme.module';
+import {
+  NbAuthJWTToken,
+  NbAuthModule,
+  NbPasswordAuthStrategy,
+} from '@nebular/auth';
+import { HttpClientModule } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +29,7 @@ import { ThemeModule } from './theme/theme.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     NbMenuModule.forRoot(),
     NbSidebarModule.forRoot(),
     NbLayoutModule,
@@ -29,6 +37,27 @@ import { ThemeModule } from './theme/theme.module';
     PagesModule,
     NbIconModule,
     ThemeModule,
+    NbAuthModule.forRoot({
+      strategies: [
+        NbPasswordAuthStrategy.setup({
+          baseEndpoint: environment.AUTH_ENDPOINT,
+          name: 'email',
+          token: {
+            class: NbAuthJWTToken,
+            key: 'token', // this parameter tells where to look for the token
+          },
+
+          login: {
+            endpoint: '/auth/sign-in',
+            method: 'post',
+            redirect: {
+              success: '/dashboard/',
+              failure: null, // stay on the same page
+            },
+          },
+        }),
+      ],
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
