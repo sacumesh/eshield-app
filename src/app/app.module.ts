@@ -11,6 +11,9 @@ import {
   NbChatModule,
   NbMenuModule,
   NbSidebarModule,
+  NbDatepicker,
+  NbDatepickerModule,
+  NbTimepickerModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PagesModule } from './pages/pages.module';
@@ -37,6 +40,8 @@ import { environment } from '../environments/environment';
     PagesModule,
     NbIconModule,
     ThemeModule,
+    NbDatepickerModule.forRoot(),
+    NbTimepickerModule.forRoot(),
     NbAuthModule.forRoot({
       strategies: [
         NbPasswordAuthStrategy.setup({
