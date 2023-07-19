@@ -1,1 +1,88 @@
-<p>exam works!</p>
+<div class="row">
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>Create exam</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="examForm" (ngSubmit)="onSubmit()">
+          <div class="form-group row">
+            <label for="date" class="label col-sm-3 col-form-label">Date</label>
+            <div class="col-sm-9">
+              <input
+                id="date"
+                nbInput
+                placeholder="Select Date"
+                name="date"
+                formControlName="date"
+                [nbDatepicker]="dateTimePicker" />
+              <nb-datepicker #dateTimePicker [min]="min"></nb-datepicker>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="startTime" class="label col-sm-3 col-form-label"
+              >Start time</label
+            >
+            <div class="col-sm-9">
+              <input
+                id="startTime"
+                nbInput
+                type="text"
+                name="startTime"
+                formControlName="startTime"
+                [nbTimepicker]="timepicker" />
+              <nb-timepicker #timepicker></nb-timepicker>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="endTime" class="label col-sm-3 col-form-label"
+              >End time</label
+            >
+            <div class="col-sm-9">
+              <input
+                id="endTime"
+                nbInput
+                type="text"
+                name="endTime"
+                formControlName="endTime"
+                [nbTimepicker]="timepicker" />
+              <nb-timepicker #timepicker></nb-timepicker>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-sm-3 col-sm-9">
+              <button type="submit" nbButton status="primary">Sign in</button>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<div>
+  <nb-card size="medium">
+    <nb-card-header>
+      <span>Student Activity</span>
+      <!--      <nb-select [selected]="type" (selectedChange)="getUserActivity($event); type = $event">-->
+      <!--        <nb-option *ngFor="let t of types" [value]="t">{{ t }}</nb-option>-->
+      <!--      </nb-select>-->
+    </nb-card-header>
+
+    <nb-list class="student-activity-list">
+      <nb-list-item *ngFor="let item of userActivity">
+        <div class="student-activity-student">
+          <nb-user> </nb-user>
+        </div>
+
+        <div class="student-activity-status">
+          <div>online</div>
+          <div>
+            <nb-icon
+              [icon]="item ? 'checkmark-circle-2' : 'checkmark-circle-2'"
+              pack="eva"></nb-icon>
+          </div>
+        </div>
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
+</div>
