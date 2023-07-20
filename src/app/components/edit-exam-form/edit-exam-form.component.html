@@ -1,0 +1,62 @@
+<nb-card>
+  <nb-card-header>Create exam</nb-card-header>
+  <nb-card-body>
+    <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="d-flex">
+        <label for="date" class="label col-sm-3 col-form-label">Date</label>
+        <div>
+          <input
+            id="date"
+            nbInput
+            placeholder="Select Date"
+            name="date"
+            formControlName="date"
+            [nbDatepicker]="dateTimePicker" />
+          <nb-datepicker #dateTimePicker [min]="min"></nb-datepicker>
+        </div>
+      </div>
+      <div class="d-flex mt-3">
+        <label for="startTime" class="label col-sm-3 col-form-label"
+          >Start</label
+        >
+        <div>
+          <input
+            id="startTime"
+            nbInput
+            type="text"
+            name="startTime"
+            formControlName="startTime"
+            [nbTimepicker]="timepicker" />
+          <nb-timepicker #timepicker></nb-timepicker>
+        </div>
+      </div>
+
+      <div class="d-flex mt-3">
+        <label for="endTime" class="label col-sm-3 col-form-label">End</label>
+        <div>
+          <input
+            id="endTime"
+            nbInput
+            type="text"
+            name="endTime"
+            formControlName="endTime"
+            [nbTimepicker]="timepicker" />
+          <nb-timepicker #timepicker></nb-timepicker>
+        </div>
+      </div>
+      <div class="d-flex mt-4 flex-row-reverse">
+        <button type="submit" nbButton status="danger" size="small">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="me-2"
+          nbButton
+          status="primary"
+          size="small">
+          Submit
+        </button>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

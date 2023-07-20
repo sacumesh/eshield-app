@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-3">
+    <nb-card>
+      <nb-card-header>
+        <span>Courses</span>
+        <!--      <nb-select [selected]="type" (selectedChange)="getUserActivity($event); type = $event">-->
+        <!--        <nb-option *ngFor="let t of types" [value]="t">{{ t }}</nb-option>-->
+        <!--      </nb-select>-->
+      </nb-card-header>
+
+      <nb-list class="course-list">
+        <nb-list-item
+          class="d-flex justify-content-between"
+          *ngFor="let item of [1, 2, 3, 4]">
+          <div class="course-name">course-name</div>
+          <div>
+            <button
+              nbButton
+              size="small"
+              status="primary"
+              (click)="onViewExam()">
+              View Exams
+            </button>
+          </div>
+        </nb-list-item>
+      </nb-list>
+    </nb-card>
+  </div>
+  <div class="col-9">
+    <nb-card>
+      <nb-card-header class="d-flex justify-content-between align-items-center">
+        <div>Exams: advjava</div>
+        <!--      <nb-select [selected]="type" (selectedChange)="getUserActivity($event); type = $event">-->
+        <!--        <nb-option *ngFor="let t of types" [value]="t">{{ t }}</nb-option>-->
+        <!--      </nb-select>-->
+        <button nbButton size="small" status="success" (click)="onCreateExam()">
+          Create Exam
+        </button>
+      </nb-card-header>
+
+      <nb-list>
+        <nb-list-item
+          class="d-flex justify-content-between"
+          *ngFor="let item of [1, 2, 3, 4]">
+          <div class="course-name">id</div>
+          <div>Exam Date:</div>
+          <div>Start Time:</div>
+          <div>End Time:</div>
+          <div>
+            <button
+              class="m-xl-2"
+              nbButton
+              size="small"
+              status="primary"
+              (click)="onEditExam()">
+              Edit
+            </button>
+            <button nbButton size="small" status="danger">Delete</button>
+          </div>
+        </nb-list-item>
+      </nb-list>
+    </nb-card>
+  </div>
+</div>

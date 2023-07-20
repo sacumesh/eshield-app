@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { NbDateService } from '@nebular/theme';
+import { NbDateService, NbDialogService } from '@nebular/theme';
+import { EditExamFormComponent } from '../../components/edit-exam-form/edit-exam-form.component';
 
 @Component({
   selector: 'app-exam',
@@ -20,12 +21,18 @@ export class ExamComponent {
 
   constructor(
     private _fb: FormBuilder,
-    private _nbDateService: NbDateService<Date>
+    private _nbDateService: NbDateService<Date>,
+    private _nbDialogService: NbDialogService
   ) {
     this.min = this._nbDateService.today();
   }
 
-  onSubmit() {
-    console.log(this.examForm);
+  open(dialog: TemplateRef<any>) {
+    this._nbDialogService.open(EditExamFormComponent, {
+      context: {},
+      closeOnBackdropClick: false,
+    });
   }
+
+  test() {}
 }
