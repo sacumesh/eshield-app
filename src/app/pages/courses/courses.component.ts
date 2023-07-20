@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
+import { EditExamFormComponent } from '../../components/edit-exam-form/edit-exam-form.component';
 
 @Component({
   selector: 'app-courses',
@@ -6,12 +8,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent {
-  flipped = false;
-  onExamClick() {
+  constructor(private _nbDialogService: NbDialogService) {}
+
+  onViewExam() {
     console.log('exam');
   }
 
-  toggleView() {
-    this.flipped = !this.flipped;
+  onCreateExam() {
+    this._nbDialogService.open(EditExamFormComponent);
+  }
+
+  onEditExam() {
+    this._nbDialogService.open(EditExamFormComponent);
   }
 }

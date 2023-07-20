@@ -1,30 +1,32 @@
-<div class="row">
-  <div class="col col-4">
-    <nb-card size="medium">
-      <nb-card-header>
-        <span>Student Activity</span>
-        <!--      <nb-select [selected]="type" (selectedChange)="getUserActivity($event); type = $event">-->
-        <!--        <nb-option *ngFor="let t of types" [value]="t">{{ t }}</nb-option>-->
-        <!--      </nb-select>-->
-      </nb-card-header>
+<div>
+  <nb-card size="medium">
+    <nb-card-header>
+      <span>Student Activity</span>
+      <!--      <nb-select [selected]="type" (selectedChange)="getUserActivity($event); type = $event">-->
+      <!--        <nb-option *ngFor="let t of types" [value]="t">{{ t }}</nb-option>-->
+      <!--      </nb-select>-->
+    </nb-card-header>
 
-      <nb-list class="student-activity-list">
-        <nb-list-item *ngFor="let item of userActivity">
-          <div class="student-activity-student">
-            <nb-user> </nb-user>
-          </div>
+    <nb-list class="student-activity-list">
+      <nb-list-item *ngFor="let item of userActivity">
+        <div class="student-activity-student">
+          <nb-user> </nb-user>
+        </div>
 
-          <div class="student-activity-status">
-            <div>online</div>
-            <div>
-              <nb-icon
-                [icon]="item ? 'checkmark-circle-2' : 'checkmark-circle-2'"
-                pack="eva"></nb-icon>
-            </div>
+        <div class="student-activity-status">
+          <div>online</div>
+          <div>
+            <nb-icon
+              [icon]="item ? 'checkmark-circle-2' : 'checkmark-circle-2'"
+              pack="eva"></nb-icon>
           </div>
-        </nb-list-item>
-      </nb-list>
-    </nb-card>
-  </div>
-  <div class="col col-4">this</div>
+        </div>
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
 </div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <app-edit-exam-form [exam]="data"></app-edit-exam-form>
+</ng-template>
+<button nbButton (click)="open(dialog)">Open Dialog</button>
