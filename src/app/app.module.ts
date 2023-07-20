@@ -14,6 +14,10 @@ import {
   NbDatepicker,
   NbDatepickerModule,
   NbTimepickerModule,
+  NbButtonModule,
+  NbCardModule,
+  NbInputModule,
+  NbDialogModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PagesModule } from './pages/pages.module';
@@ -25,6 +29,8 @@ import {
 } from '@nebular/auth';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { EditExamFormComponent } from './components/edit-exam-form/edit-exam-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,6 +48,7 @@ import { environment } from '../environments/environment';
     ThemeModule,
     NbDatepickerModule.forRoot(),
     NbTimepickerModule.forRoot(),
+    NbDialogModule.forRoot(),
     NbAuthModule.forRoot({
       strategies: [
         NbPasswordAuthStrategy.setup({
@@ -63,8 +70,14 @@ import { environment } from '../environments/environment';
         }),
       ],
     }),
+    FormsModule,
+    NbButtonModule,
+    NbCardModule,
+    NbInputModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [],
 })
 export class AppModule {}

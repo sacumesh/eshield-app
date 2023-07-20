@@ -1,17 +1,17 @@
+<app-two-columns> </app-two-columns>
+
 <div>
   <nb-card size="medium">
     <nb-card-header>
-      <span>Student Activity</span>
+      <span>Courses</span>
       <!--      <nb-select [selected]="type" (selectedChange)="getUserActivity($event); type = $event">-->
       <!--        <nb-option *ngFor="let t of types" [value]="t">{{ t }}</nb-option>-->
       <!--      </nb-select>-->
     </nb-card-header>
 
-    <nb-list class="student-activity-list">
-      <nb-list-item *ngFor="let item of userActivity">
-        <div class="student-activity-student">
-          <nb-user> </nb-user>
-        </div>
+    <nb-list class="course-list">
+      <nb-list-item *ngFor="let item of [1, 2, 3, 4]">
+        <div class="course-name">course-name</div>
 
         <div class="student-activity-status">
           <div>online</div>
