@@ -25,8 +25,3 @@
     </nb-list>
   </nb-card>
 </div>
-
-<ng-template #dialog let-data let-ref="dialogRef">
-  <app-edit-exam-form [exam]="data"></app-edit-exam-form>
-</ng-template>
-<button nbButton (click)="open(dialog)">Open Dialog</button>
