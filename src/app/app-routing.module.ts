@@ -1,11 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NbAuthComponent, NbLoginComponent } from '@nebular/auth';
+import { PageComponent } from './pages/page/page.component';
+import { ExamComponent } from './pages/exam/exam.component';
+import { CoursesComponent } from './pages/courses/courses.component';
 
 export const routes: Routes = [
   {
     path: 'pages',
-    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
+    component: PageComponent,
+    children: [
+      {
+        path: 'exam',
+        component: ExamComponent,
+      },
+      {
+        path: 'courses',
+        component: CoursesComponent,
+      },
+    ],
   },
   {
     path: 'auth',
