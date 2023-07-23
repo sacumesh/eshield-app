@@ -80,6 +80,7 @@ import { CoursesComponent } from './pages/courses/courses.component';
     NbThemeModule.forRoot(),
     NbMenuModule.forRoot(),
     NbSidebarModule.forRoot(),
+    NbToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

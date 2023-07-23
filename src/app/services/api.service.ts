@@ -7,12 +7,16 @@ import {
 import { catchError, Observable, of, mergeMap, mapTo } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
+import { NbToastrService } from '@nebular/theme';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient,
+    private _toastrService: NbToastrService
+  ) {}
 
   get<T>(path: string): Observable<T | null> {
     const url = this.makeUrl(path);
@@ -82,6 +86,7 @@ export class ApiService {
   }
 
   private handleErrorResponse(error: HttpErrorResponse): void {
+    this._toastrService.show(error.message, error.name, { status: 'danger' });
     console.error('An error occurred:', error);
   }
 
