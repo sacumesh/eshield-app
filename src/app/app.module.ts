@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { EditExamFormComponent } from './components/edit-exam-form/edit-exam-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { initializeKeycloak } from './utils/keycloak.config';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,6 +51,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbDatepickerModule.forRoot(),
     NbTimepickerModule.forRoot(),
     NbDialogModule.forRoot(),
+    KeycloakAngularModule,
     NbAuthModule.forRoot({
       strategies: [
         NbPasswordAuthStrategy.setup({
@@ -76,7 +79,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NbInputModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    },
+  ],
   bootstrap: [AppComponent],
   exports: [],
 })
