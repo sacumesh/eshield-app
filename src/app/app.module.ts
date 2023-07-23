@@ -18,10 +18,13 @@ import {
   NbCardModule,
   NbInputModule,
   NbDialogModule,
+  NbToastrModule,
+  NbUserModule,
+  NbListModule,
+  NbContextMenuModule,
+  NbActionsModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { PagesModule } from './pages/pages.module';
-import { ThemeModule } from './theme/theme.module';
 import {
   NbAuthJWTToken,
   NbAuthModule,
@@ -31,50 +34,53 @@ import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { EditExamFormComponent } from './components/edit-exam-form/edit-exam-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ExamComponent } from './pages/exam/exam.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { OneColumnComponent } from './components/one-column/one-column.component';
+import { TwoColumnsComponent } from './components/two-columns/two-columns.component';
+import { ThreeColumnsComponent } from './components/three-columns/three-columns.component';
+import { PageComponent } from './pages/page/page.component';
+import { CoursesComponent } from './pages/courses/courses.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    PageComponent,
+    ExamComponent,
+    EditExamFormComponent,
+    HeaderComponent,
+    FooterComponent,
+    OneColumnComponent,
+    TwoColumnsComponent,
+    ThreeColumnsComponent,
+    CoursesComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NbMenuModule.forRoot(),
-    NbSidebarModule.forRoot(),
     NbLayoutModule,
     NbEvaIconsModule,
-    PagesModule,
     NbIconModule,
-    ThemeModule,
-    NbDatepickerModule.forRoot(),
-    NbTimepickerModule.forRoot(),
-    NbDialogModule.forRoot(),
-    NbAuthModule.forRoot({
-      strategies: [
-        NbPasswordAuthStrategy.setup({
-          baseEndpoint: environment.AUTH_ENDPOINT,
-          name: 'email',
-          token: {
-            class: NbAuthJWTToken,
-            key: 'token', // this parameter tells where to look for the token
-          },
-
-          login: {
-            endpoint: '/auth/sign-in',
-            method: 'post',
-            redirect: {
-              success: '/dashboard/',
-              failure: null, // stay on the same page
-            },
-          },
-        }),
-      ],
-    }),
+    NbUserModule,
     FormsModule,
     NbButtonModule,
     NbCardModule,
     NbInputModule,
     ReactiveFormsModule,
+    NbListModule,
+    NbContextMenuModule,
+    NbActionsModule,
+    NbMenuModule.forRoot(),
+    NbDatepickerModule.forRoot(),
+    NbTimepickerModule.forRoot(),
+    NbDialogModule.forRoot(),
+    NbThemeModule.forRoot(),
+    NbMenuModule.forRoot(),
+    NbSidebarModule.forRoot(),
+    NbToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
