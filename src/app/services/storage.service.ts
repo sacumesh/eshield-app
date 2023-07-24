@@ -13,6 +13,9 @@ export class StorageService {
   private static readonly STORAGE_KEY_USER = 'user';
   public user: any;
 
+  private static readonly STORAGE_KEY_REFRESH_TOKE = 'refresh-token';
+  public refreshToken!: AccessToken | null;
+
   constructor() {}
 
   public storeToken(token: AccessToken | null): Observable<boolean> {

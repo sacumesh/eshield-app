@@ -85,7 +85,7 @@ export class ApiService {
     return environment.API_URL.concat(path);
   }
 
-  private handleErrorResponse(error: HttpErrorResponse): void {
+  public handleErrorResponse(error: HttpErrorResponse): void {
     this._toastrService.show(error.message, error.name, { status: 'danger' });
     console.error('An error occurred:', error);
   }
