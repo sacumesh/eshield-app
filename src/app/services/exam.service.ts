@@ -8,6 +8,6 @@ export class ExamService {
   constructor(private _apiService: ApiService) {}
 
   getCourses() {
-    return this._apiService.get<any>('/');
+    return this._apiService.get<any>('Course');
   }
 }
