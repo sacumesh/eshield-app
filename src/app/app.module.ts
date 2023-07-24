@@ -30,7 +30,7 @@ import {
   NbAuthModule,
   NbPasswordAuthStrategy,
 } from '@nebular/auth';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { EditExamFormComponent } from './components/edit-exam-form/edit-exam-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -42,6 +42,7 @@ import { TwoColumnsComponent } from './components/two-columns/two-columns.compon
 import { ThreeColumnsComponent } from './components/three-columns/three-columns.component';
 import { PageComponent } from './pages/page/page.component';
 import { CoursesComponent } from './pages/courses/courses.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,9 @@ import { CoursesComponent } from './pages/courses/courses.component';
     NbSidebarModule.forRoot(),
     NbToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
   exports: [],
 })
