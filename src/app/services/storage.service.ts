@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AccessToken } from '../models/keycloak-model';
 import { Constants } from '../Constants';
-import { mergeMap, Observable, of } from 'rxjs';
+import { flatMap, mergeMap, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +14,9 @@ export class StorageService {
   private static readonly STORAGE_KEY_USER = 'user';
   public user: any;
 
-  private static readonly STORAGE_KEY_REFRESH_TOKE = 'refresh-token';
-  public refreshToken!: AccessToken | null;
-
-  constructor() {}
+  constructor() {
+    this.fromCache().subscribe();
+  }
 
   public storeToken(token: AccessToken | null): Observable<boolean> {
     this.token = token;
@@ -40,5 +40,26 @@ export class StorageService {
 
   public clear(): Observable<boolean> {
     return this.storeUser(null).pipe(mergeMap(() => this.storeToken(null)));
+  }
+
+  public fromCache() {
+    return this.getLocalStorageValue(StorageService.STORAGE_KEY_TOKEN).pipe(
+      mergeMap(value => {
+        if (value) {
+          this.token = JSON.parse(value);
+        }
+        return this.getLocalStorageValue(StorageService.STORAGE_KEY_USER);
+      }),
+      map(() => {
+        return true;
+      })
+    );
+  }
+
+  public getLocalStorageValue(key: string) {
+    const value: string | null = localStorage.getItem(
+      Constants.LOCAL_STORAGE_PREFIX + key
+    );
+    return of(value);
   }
 }

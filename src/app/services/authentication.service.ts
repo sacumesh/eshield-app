@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { AccessToken } from '../models/keycloak-model';
 import { catchError, mergeMap, Observable, of } from 'rxjs';
@@ -25,23 +25,29 @@ export class AuthenticationService {
     return this._storageService.storeToken(token);
   }
 
-  public isAuthenticated() {
+  public isAuthenticated(): boolean {
     return this._storageService.token != null;
   }
 
-  public getRefreshToken() {
-    return this._storageService.refreshToken;
-  }
-
-  public refreshToken(token: string) {
-    return this._http.post(environment.AUTH_ENDPOINT + 'refreshtoken', {
-      refreshToken: token,
-    });
+  public getRefreshToken(): string | null {
+    return this._storageService.token?.refresh_token || null;
   }
 
   public login(credentials: Credentials): Observable<boolean> {
+    const data = {
+      grant_type: 'password',
+      client_id: 'client-sachiththa',
+      username: 'sachiththa',
+      password: 'test',
+    };
+
+    const urlEncodedData = new URLSearchParams(data).toString();
+    const headers = new HttpHeaders().set(
+      'Content-Type',
+      'application/x-www-form-urlencoded'
+    );
     return this._http
-      .post<AccessToken>(environment.AUTH_ENDPOINT, credentials, {})
+      .post<AccessToken>(environment.AUTH_ENDPOINT, urlEncodedData, { headers })
       .pipe(
         mergeMap((token: AccessToken) => {
           if (token) {

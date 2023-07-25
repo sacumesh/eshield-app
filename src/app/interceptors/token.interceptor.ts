@@ -4,20 +4,19 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpErrorResponse,
+  HttpClient,
 } from '@angular/common/http';
 import {
   BehaviorSubject,
   catchError,
-  finalize,
   Observable,
   switchMap,
-  take,
   throwError,
 } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthenticationService } from '../services/authentication.service';
 import { AccessToken } from '../models/keycloak-model';
-import { filter } from 'rxjs/operators';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -25,10 +24,12 @@ export class TokenInterceptor implements HttpInterceptor {
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
     null
   );
-  constructor(private _authenticationService: AuthenticationService) {}
+  constructor(
+    private _authenticationService: AuthenticationService,
+    private _http: HttpClient
+  ) {}
 
   private shouldBeIntercepted(request: HttpRequest<unknown>): boolean {
-    console.log('Sfds');
     return request.url.startsWith(environment.API_URL);
   }
 
@@ -37,75 +38,50 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     if (this.shouldBeIntercepted(request)) {
-      const headers = request.headers;
+      let headers = request.headers;
       if (this._authenticationService.isAuthenticated()) {
         const token: AccessToken | null =
           this._authenticationService.getToken();
-        headers.set('Authentication', 'Bearer ' + token?.access_token);
+        headers = headers.set(
+          'Authentication',
+          'Bearer ' + token?.access_token
+        );
       }
 
       request = request.clone({ headers: headers });
     }
 
-    return next.handle(request);
+    return next.handle(request).pipe(
+      catchError(error => {
+        if (error instanceof HttpErrorResponse && error.status === 401) {
+          return this.handle401Error(request, next);
+        }
+
+        return throwError(error);
+      })
+    );
   }
 
   private handle401Error(
-    request: HttpRequest<any>,
+    request: HttpRequest<unknown>,
     next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
+  ): Observable<HttpEvent<unknown>> {
+    return this._http.post<AccessToken>('', null).pipe(
+      switchMap((token: AccessToken) => {
+        this._authenticationService.setToken(token);
+        const accessToken = this._authenticationService.getToken();
 
-      const token = this._authenticationService.getRefreshToken();
+        request = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${accessToken?.access_token}`,
+          },
+        });
 
-      if (token) {
-        return this._authenticationService.refreshToken('token').pipe(
-          switchMap((token: any) => {
-            this.isRefreshing = false;
-
-            this._authenticationService.setToken(token);
-            this.refreshTokenSubject.next(token.accessToken);
-
-            return next.handle(this.addTokenHeader(request, token.accessToken));
-          }),
-          catchError(err => {
-            this.isRefreshing = false;
-            this._authenticationService.logout();
-            return throwError(err);
-          })
-        );
-      } else {
-        this._authenticationService.logout();
-        return throwError('Refresh token not available.');
-      }
-    } else {
-      return this.refreshTokenSubject.pipe(
-        filter(token => token !== null),
-        take(1),
-        switchMap(token => next.handle(this.addTokenHeader(request, token))),
-        finalize(() => {
-          this.isRefreshing = false;
-        })
-      );
-    }
-  }
-
-  private addTokenHeader(
-    request: HttpRequest<any>,
-    token?: string | null
-  ): HttpRequest<any> {
-    const accessToken = token || this._authenticationService.getToken();
-
-    if (accessToken) {
-      return request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-    }
-
-    return request;
+        return next.handle(request);
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
   }
 }

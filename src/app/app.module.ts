@@ -23,6 +23,7 @@ import {
   NbListModule,
   NbContextMenuModule,
   NbActionsModule,
+  NbAlertModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import {
@@ -43,6 +44,7 @@ import { ThreeColumnsComponent } from './components/three-columns/three-columns.
 import { PageComponent } from './pages/page/page.component';
 import { CoursesComponent } from './pages/courses/courses.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     TwoColumnsComponent,
     ThreeColumnsComponent,
     CoursesComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,6 +85,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     NbMenuModule.forRoot(),
     NbSidebarModule.forRoot(),
     NbToastrModule.forRoot(),
+    NbAlertModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
