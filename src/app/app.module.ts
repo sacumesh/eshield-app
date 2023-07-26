@@ -85,6 +85,7 @@ import { LoginComponent } from './pages/login/login.component';
     NbMenuModule.forRoot(),
     NbSidebarModule.forRoot(),
     NbToastrModule.forRoot(),
+    NbAuthModule.forRoot(),
     NbAlertModule,
   ],
   providers: [

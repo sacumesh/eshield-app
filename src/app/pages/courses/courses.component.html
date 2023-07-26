@@ -11,8 +11,8 @@
       <nb-list class="course-list">
         <nb-list-item
           class="d-flex justify-content-between"
-          *ngFor="let item of [1, 2, 3, 4]">
-          <div class="course-name">course-name</div>
+          *ngFor="let item of ['adv-java', 'adv-c']">
+          <div class="course-name">{{ item }}</div>
           <div>
             <button
               nbButton
@@ -29,7 +29,7 @@
   <div class="col-9">
     <nb-card>
       <nb-card-header class="d-flex justify-content-between align-items-center">
-        <div>Exams: advjava</div>
+        <div>Exams: adv-java</div>
         <!--      <nb-select [selected]="type" (selectedChange)="getUserActivity($event); type = $event">-->
         <!--        <nb-option *ngFor="let t of types" [value]="t">{{ t }}</nb-option>-->
         <!--      </nb-select>-->
@@ -41,11 +41,17 @@
       <nb-list>
         <nb-list-item
           class="d-flex justify-content-between"
-          *ngFor="let item of [1, 2, 3, 4]">
-          <div class="course-name">id</div>
-          <div>Exam Date:</div>
-          <div>Start Time:</div>
-          <div>End Time:</div>
+          *ngFor="let item of [1]">
+          <div class="course-name">id:<strong>1</strong></div>
+          <div>
+            Exam Date: <span><strong> 12-08-2023</strong></span>
+          </div>
+          <div>
+            Start Time: <span><strong>09:00h</strong></span>
+          </div>
+          <div>
+            End Time: <span><strong>13:00h</strong></span>
+          </div>
           <div>
             <button
               class="m-xl-2"

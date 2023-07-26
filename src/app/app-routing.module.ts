@@ -23,7 +23,13 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    component: LoginComponent,
+    component: NbAuthComponent,
+    children: [
+      {
+        path: '',
+        component: NbLoginComponent,
+      },
+    ],
   },
 ];
 
