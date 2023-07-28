@@ -14,9 +14,7 @@ export class StorageService {
   private static readonly STORAGE_KEY_USER = 'user';
   public user: any;
 
-  constructor() {
-    this.fromCache().subscribe();
-  }
+  constructor() {}
 
   public storeToken(token: AccessToken | null): Observable<boolean> {
     this.token = token;

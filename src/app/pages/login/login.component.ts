@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
+import { Credentials } from '../../models/credentials';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -9,31 +11,25 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class LoginComponent {
   showMessages: any;
-  user: any;
   submitted: any;
   messages: any;
   errors: any;
 
-  form = this._fb.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
-  });
+  credentials: Credentials = {
+    email: 'sac',
+    password: 'sacume3@gmail.com',
+  };
 
-  constructor(
-    private _fb: FormBuilder,
-    private _authenticationService: AuthenticationService
-  ) {}
+  constructor(private _authenticationService: AuthenticationService) {}
 
-  login() {
-    this._authenticationService
-      .login({
-        username: 'sachiththa',
-        password: 'test',
-      })
-      .subscribe();
-  }
-
-  getConfigValue(required: string) {
-    return undefined;
+  async login() {
+    const booleanObservable = this._authenticationService.login(
+      this.credentials
+    );
+    try {
+      await lastValueFrom(booleanObservable);
+    } catch (e) {
+      console.error(e);
+    }
   }
 }

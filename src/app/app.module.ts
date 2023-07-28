@@ -24,6 +24,7 @@ import {
   NbContextMenuModule,
   NbActionsModule,
   NbAlertModule,
+  NbCheckboxModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import {
@@ -87,6 +88,7 @@ import { LoginComponent } from './pages/login/login.component';
     NbToastrModule.forRoot(),
     NbAuthModule.forRoot(),
     NbAlertModule,
+    NbCheckboxModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
