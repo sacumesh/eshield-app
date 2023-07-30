@@ -1,10 +1,16 @@
 export const environment = {
-  AUTH_ENDPOINT:
-    'http://192.168.5.248s:8080/auth/realms/RealmSachiththa/protocol/openid-connect/token',
-  API_URL: 'https://example.com',
+  api: {
+    key: '4bd5132f-d973-42ee-addb-269bbb04b3f7',
+    version: '1.0',
+    url: 'http://gateway.local.gd:8080/ActionLearning/',
+  },
   keycloakConfig: {
-    url: 'https://your-keycloak-server/auth',
-    realm: 'your-realm',
-    clientId: 'your-client-id',
+    baseUrl: 'http://auth.local.gd:8080/realms/',
+    realm: 'action-learning',
+    clientId: 'eshield',
+    grantTypes: {
+      password: 'password',
+      refeshToken: 'refresh_token',
+    }
   },
 };

@@ -82,7 +82,8 @@ export class ApiService {
   }
 
   private makeUrl(path: string): string {
-    return environment.API_URL.concat(path);
+    // example http://gateway.local.gd:8080/ActionLearning/courses/1.0?apikey=4bd5132f-d973-42ee-addb-269bbb04b3f7
+    return `${environment.api.url}${path}/${environment.api.version}?apikey=${environment.api.key}`
   }
 
   public handleErrorResponse(error: HttpErrorResponse): void {

@@ -11,17 +11,21 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class KeycloakService {
-  private static readonly BASE_URL = environment.keycloakConfig.url;
+  private static readonly BASE_URL = environment.keycloakConfig.baseUrl;
   private static readonly CLIENT_ID = environment.keycloakConfig.clientId;
   private static REALM = environment.keycloakConfig.realm;
+  private static GRANT_TYPE_PASSWORD = environment.keycloakConfig.grantTypes.password;
+  private static GRANT_TYPE_REFRESH_TOKEN = environment.keycloakConfig.grantTypes.refreshToken;
 
   constructor(
     private _apiService: ApiService,
     private _http: HttpClient
   ) {}
   public login(credentials: Credentials): Observable<AccessToken | null> {
+    
+
     const data = {
-      grant_type: 'password',
+      grant_type: KeycloakService.GRANT_TYPE_PASSWORD,
       client_id: KeycloakService.CLIENT_ID,
       username: credentials.email,
       password: credentials.password,
@@ -32,8 +36,10 @@ export class KeycloakService {
       'Content-Type',
       'application/x-www-form-urlencoded'
     );
+
+    const url = this.makeUrl('token');
     return this._http
-      .post<AccessToken>(environment.AUTH_ENDPOINT, urlEncodedData, {
+      .post<AccessToken>(url, urlEncodedData, {
         headers,
       })
       .pipe(
@@ -45,8 +51,9 @@ export class KeycloakService {
   }
 
   public logout(token: AccessToken): Observable<boolean> {
+    const url = this.makeUrl('logout');
     return this._http
-      .get(``, {
+      .post(url, {
         headers: new HttpHeaders({
           Authorization: `Bearer ${token.access_token}`,
         }),
@@ -59,4 +66,10 @@ export class KeycloakService {
         })
       );
   }
+
+  private makeUrl(path: string): string {
+    return `${KeycloakService.BASE_URL}${KeycloakService.REALM}/protocol/openid-connect/${path}`;
+  }
+
+ 
 }

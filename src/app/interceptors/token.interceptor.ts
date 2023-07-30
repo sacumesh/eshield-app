@@ -30,7 +30,7 @@ export class TokenInterceptor implements HttpInterceptor {
   ) {}
 
   private shouldBeIntercepted(request: HttpRequest<unknown>): boolean {
-    return request.url.startsWith(environment.API_URL);
+    return request.url.startsWith(environment.api.url);
   }
 
   intercept(
@@ -43,7 +43,7 @@ export class TokenInterceptor implements HttpInterceptor {
         const token: AccessToken | null =
           this._authenticationService.getToken();
         headers = headers.set(
-          'Authentication',
+          'Authorization',
           'Bearer ' + token?.access_token
         );
       }
