@@ -4,11 +4,14 @@ import { NbAuthComponent, NbLoginComponent } from '@nebular/auth';
 import { PageComponent } from './pages/page/page.component';
 import { ExamComponent } from './pages/exam/exam.component';
 import { CoursesComponent } from './pages/courses/courses.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: 'pages',
     component: PageComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'exam',
@@ -22,20 +25,8 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    component: NbAuthComponent,
-    children: [
-      {
-        path: '',
-        component: NbLoginComponent,
-      },
-      {
-        path: 'login',
-        component: NbLoginComponent,
-      },
-    ],
+    component: LoginComponent,
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
 ];
 
 @NgModule({
